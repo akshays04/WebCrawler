@@ -20,15 +20,13 @@ public class Crawler {
                 CrawlController controller = new CrawlController(crawlConfig,
                         pageFetcher, robotstxtServer);
                 
-                //controller.addSeed("http://web.mit.edu/");
-                controller.addSeed("http://www.nba.com/");
+                controller.addSeed("http://web.mit.edu/");
+                //controller.addSeed("http://www.calstatela.edu/");
                 //controller.addSeed("http://www.ics.uci.edu/");
 
-                /*
-                 * Start the crawl. This is a blocking operation, meaning that your code
-                 * will reach the line after this only when crawling is finished.
-                 */
-                controller.start(MyCrawler.class, 5);
+
+                controller.start(MyCrawler.class, 1);
+                MyCrawler.writeMap();
                 
                 
         }catch(Exception e){e.printStackTrace();}
