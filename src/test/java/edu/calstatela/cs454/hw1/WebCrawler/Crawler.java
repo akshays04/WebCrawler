@@ -9,6 +9,9 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 public class Crawler {
 	
 	public static void main(String[] args) {
+		
+		//int depth=Integer.parseInt(args[0]);
+		
         CrawlConfig crawlConfig = new CrawlConfig();
         crawlConfig.setMaxDepthOfCrawling(2);
         crawlConfig.setCrawlStorageFolder("C:\\asp\\crawler4jStorage");
@@ -20,12 +23,12 @@ public class Crawler {
                 CrawlController controller = new CrawlController(crawlConfig,
                         pageFetcher, robotstxtServer);
                 
-                controller.addSeed("http://web.mit.edu/");
-                //controller.addSeed("http://www.calstatela.edu/");
+                //controller.addSeed("http://www.lewebdev.com/");
+                controller.addSeed("http://www.calstatela.edu/");
                 //controller.addSeed("http://www.ics.uci.edu/");
 
 
-                controller.start(MyCrawler.class, 1);
+                controller.start(MyCrawler.class, 100);
                 MyCrawler.writeMap();
                 
                 

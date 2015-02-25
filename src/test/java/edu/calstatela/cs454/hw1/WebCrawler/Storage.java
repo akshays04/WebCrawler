@@ -1,7 +1,11 @@
 package edu.calstatela.cs454.hw1.WebCrawler;
 
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +30,8 @@ public class Storage {
 			
 			//adding url
 			data.setUrl(url);
+			uuid = UUID.randomUUID();
+			
 			
 			//adding doc data
 			Document doc = Jsoup.connect(url).get();
@@ -42,8 +48,14 @@ public class Storage {
 			data.setElements(doc.select("meta"));
 			
 			data.createJSON();
+			if(url.toLowerCase().contains(".pdf"))
+			{
+				URL website = new URL(url);
+				ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+				FileOutputStream fos = new FileOutputStream(uuid.toString()+".pdf");
+				fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+			}
 			
-			uuid = UUID.randomUUID();
 			System.out.println(uuid);
 			FileWriter file = new FileWriter(".\\CrawlerStorage\\"+uuid+".json");
 			file.write(data.getJson().toJSONString());
