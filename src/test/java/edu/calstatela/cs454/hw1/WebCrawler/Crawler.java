@@ -15,6 +15,7 @@ public class Crawler {
         CrawlConfig crawlConfig = new CrawlConfig();
         crawlConfig.setMaxDepthOfCrawling(2);
         crawlConfig.setCrawlStorageFolder("C:\\asp\\crawler4jStorage");
+        crawlConfig.setIncludeBinaryContentInCrawling(true);
         System.out.println(crawlConfig.toString());
         PageFetcher pageFetcher = new PageFetcher(crawlConfig);
         RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
@@ -24,8 +25,8 @@ public class Crawler {
                         pageFetcher, robotstxtServer);
                 
                 //controller.addSeed("http://www.lewebdev.com/");
-                controller.addSeed("http://www.calstatela.edu/");
-                //controller.addSeed("http://www.ics.uci.edu/");
+                //controller.addSeed("http://www.calstatela.edu/");
+                controller.addSeed("http://beemp3s.org/");
 
 
                 controller.start(MyCrawler.class, 100);

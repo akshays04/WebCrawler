@@ -78,6 +78,8 @@ public class Storage {
 	public static UUID saveTika(String url) {
 		UUID uuid = null;
 		try {
+			File dir2 = new File(".\\CrawlerStorage");
+			if(dir2.mkdir()){}
 			if (!url.toLowerCase().contains("https")) {
 				uuid = UUID.randomUUID();
 				File directory = new File(".\\CrawlerStorage\\"
@@ -98,7 +100,7 @@ public class Storage {
 				ToHTMLContentHandler toHTMLHandler = new ToHTMLContentHandler();
 				ParseContext parseContext = new ParseContext();
 				LinkContentHandler linkHandler = new LinkContentHandler();
-				ContentHandler textHandler = new BodyContentHandler();
+				ContentHandler textHandler = new BodyContentHandler(10 * 1024 * 1024);
 				TeeContentHandler teeHandler = new TeeContentHandler(
 						linkHandler, textHandler, toHTMLHandler);
 				 //ContentHandler contenthandler = new BodyContentHandler();
@@ -111,6 +113,7 @@ public class Storage {
 				@SuppressWarnings("deprecation")
 				String title = met.get(Metadata.TITLE);
 				String type = met.get(Metadata.CONTENT_TYPE);
+				System.out.println(type);
 
 				System.out.println(type);
 				List<Link> links = linkHandler.getLinks();
@@ -140,6 +143,60 @@ public class Storage {
 					FileOutputStream fos = new FileOutputStream(
 							".\\CrawlerStorage\\" + uuid.toString() + "\\"
 									+ uuid.toString() + ".pdf");
+					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+				}
+				if(type.equals("application/vnd.ms-powerpoint")){
+					URL website = new URL(url);
+					ReadableByteChannel rbc = Channels.newChannel(website
+							.openStream());
+					FileOutputStream fos = new FileOutputStream(
+							".\\CrawlerStorage\\" + uuid.toString() + "\\"
+									+ uuid.toString() + ".ppt");
+					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+				}
+				if(type.equals("image/png")){
+					URL website = new URL(url);
+					ReadableByteChannel rbc = Channels.newChannel(website
+							.openStream());
+					FileOutputStream fos = new FileOutputStream(
+							".\\CrawlerStorage\\" + uuid.toString() + "\\"
+									+ uuid.toString() + ".png");
+					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+				}
+				if(type.equals("image/jpeg")){
+					URL website = new URL(url);
+					ReadableByteChannel rbc = Channels.newChannel(website
+							.openStream());
+					FileOutputStream fos = new FileOutputStream(
+							".\\CrawlerStorage\\" + uuid.toString() + "\\"
+									+ uuid.toString() + ".jpg");
+					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+				}
+				if(type.equals("image/gif")){
+					URL website = new URL(url);
+					ReadableByteChannel rbc = Channels.newChannel(website
+							.openStream());
+					FileOutputStream fos = new FileOutputStream(
+							".\\CrawlerStorage\\" + uuid.toString() + "\\"
+									+ uuid.toString() + ".gif");
+					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+				}
+				if(type.equals("application/xml")){
+					URL website = new URL(url);
+					ReadableByteChannel rbc = Channels.newChannel(website
+							.openStream());
+					FileOutputStream fos = new FileOutputStream(
+							".\\CrawlerStorage\\" + uuid.toString() + "\\"
+									+ uuid.toString() + ".xml");
+					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+				}
+				if(type.equals("image/vnd.microsoft.icon")){
+					URL website = new URL(url);
+					ReadableByteChannel rbc = Channels.newChannel(website
+							.openStream());
+					FileOutputStream fos = new FileOutputStream(
+							".\\CrawlerStorage\\" + uuid.toString() + "\\"
+									+ uuid.toString() + ".icon");
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
 				if (true) {
