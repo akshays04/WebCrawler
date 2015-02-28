@@ -2,8 +2,10 @@ package edu.calstatela.cs454.hw1.WebCrawler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.tika.metadata.Metadata;
+import org.apache.tika.sax.Link;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.jsoup.select.Elements;
@@ -15,8 +17,10 @@ public class DataWeb {
 	List<String> links;
 	List<DataFile> files;
 	Elements elements;
-	
+	List<Link> Urllinks;
 	JSONObject json;
+	Map<String,Object> metadata;
+	Metadata metadata2;
 
 	public DataWeb() {
 		super();
@@ -86,15 +90,40 @@ public class DataWeb {
 
 	public void createJSON(){
 		this.json.put("url", this.url);
-		this.json.put("data", this.data);
+		//this.json.put("data", this.data);
 		//JSONArray arr = new JSONArray();
 		//System.out.println(this.links.size());
 		//arr.addAll(this.links);
 		//System.out.println(arr.size());
 		//this.json.put("links", arr);
-		this.json.put("links", this.links);
+		//this.json.put("links", this.links);
 		//this.json.put("files",);
-		this.json.put("Metadata", this.elements);
+		//this.json.put("Metadata", this.elements);
+		this.json.put("Metadata", this.metadata);
+	}
+
+	public List<Link> getUrllinks() {
+		return Urllinks;
+	}
+
+	public void setUrllinks(List<Link> urllinks) {
+		Urllinks = urllinks;
+	}
+
+	/*public Metadata getMetadata2() {
+		return metadata2;
+	}
+
+	public void setMetadata2(Metadata metadata2) {
+		this.metadata2 = metadata2;
+	}
+*/
+	public Map<String, Object> getMetadata() {
+		return metadata;
+	}
+
+	public void setMetadata(Map<String, Object> metadata) {
+		this.metadata = metadata;
 	}
 	
 	

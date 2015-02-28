@@ -37,7 +37,7 @@ public class MyCrawler extends WebCrawler {
      public void visit(Page page) {
          String url = page.getWebURL().getURL();
          System.out.println("URL: " + url);
-         UUID filename = storage.save(url);
+         UUID filename = storage.saveTika(url);
          if(filename != null)
         	 urlMapper.put(url, filename);
 
