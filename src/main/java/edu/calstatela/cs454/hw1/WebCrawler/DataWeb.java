@@ -21,7 +21,7 @@ public class DataWeb {
 	//List<Link> Urllinks;
 	HashMap<String,String> Links;
 	JSONObject json;
-	Map<String,Object> metadata;
+	JSONObject metadata;
 	Metadata metadata2;
 
 	public DataWeb() {
@@ -122,16 +122,18 @@ public class DataWeb {
 		this.metadata2 = metadata2;
 	}
 */
-	public Map<String, Object> getMetadata() {
-		return metadata;
-	}
-
-	public void setMetadata(Map<String, Object> metadata) {
-		this.metadata = metadata;
-	}
+	
 
 	public void setLinks(HashMap<String, String> links) {
 		Links = links;
+	}
+
+	public JSONObject getMetadata() {
+		return metadata;
+	}
+
+	public void setMetadata(JSONObject metadata) {
+		this.metadata = metadata;
 	}
 	
 	

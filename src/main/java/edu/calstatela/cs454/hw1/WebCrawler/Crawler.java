@@ -10,11 +10,13 @@ public class Crawler {
 	
 	public static void main(String[] args) {
 		
-		int depth=Integer.parseInt(args[1]);
-		String url = args[3];
+		//int depth=Integer.parseInt(args[1]);
+		//String url = args[3];
 		
         CrawlConfig crawlConfig = new CrawlConfig();
-        crawlConfig.setMaxDepthOfCrawling(depth);
+        //crawlConfig.setMaxDepthOfCrawling(depth);
+        crawlConfig.setMaxDepthOfCrawling(2);
+        crawlConfig.setMaxPagesToFetch(1);
         crawlConfig.setCrawlStorageFolder("C:\\asp\\crawler4jStorage");
         crawlConfig.setIncludeBinaryContentInCrawling(true);
         System.out.println(crawlConfig.toString());
@@ -27,8 +29,8 @@ public class Crawler {
                 
                 //controller.addSeed("http://www.lewebdev.com/");
                 //controller.addSeed("http://www.calstatela.edu/");
-                //controller.addSeed("http://www.apple.com/");
-                controller.addSeed(url);
+                controller.addSeed("http://www.apple.com/");
+                //controller.addSeed(url);
 
 
                 controller.start(MyCrawler.class, 100);

@@ -1,8 +1,11 @@
 package edu.calstatela.cs454.hw1.WebCrawler;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -16,6 +19,7 @@ import java.util.regex.Pattern;
 
 import org.apache.tika.Tika;
 import org.apache.tika.metadata.Metadata;
+import org.apache.tika.mime.MimeTypesFactory;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.sax.BodyContentHandler;
@@ -23,6 +27,9 @@ import org.apache.tika.sax.Link;
 import org.apache.tika.sax.LinkContentHandler;
 import org.apache.tika.sax.TeeContentHandler;
 import org.apache.tika.sax.ToHTMLContentHandler;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -92,7 +99,7 @@ public class Storage {
 					System.out.println("Failed to create directory!");
 				}
 
-				Map<String, Object> metadata = new HashMap<String, Object>();
+				JSONObject metadata = new JSONObject();
 
 				Tika tika = new Tika();
 				tika.setMaxStringLength(10 * 1024 * 1024);
@@ -145,6 +152,7 @@ public class Storage {
 
 				// data.setElements(doc.select("meta"));
 				data.createJSON();
+				
 				if (url.toLowerCase().contains(".pdf")) {
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
@@ -232,6 +240,61 @@ public class Storage {
 			e.printStackTrace();
 		}
 		return uuid;
+	}
+	
+	public void extractMetaData(String fileName,String url)
+	{
+		try
+		{
+			FileWriter metadataFile = new FileWriter(".\\CrawlerStorage\\metadata.json",true);
+			JSONObject json = new JSONObject();
+					
+			File dirLoc = new File("./CrawlerStorage");
+			for(File file : dirLoc.listFiles())
+			{
+				if(file.isDirectory() && file.getName().equals(fileName))
+				{
+					for(File jsonFile : file.listFiles())
+					{
+						if(jsonFile.getName().equals(fileName+".json"))
+						{
+							System.out.println("file found"+fileName);
+							
+							FileReader fileReader = new FileReader(jsonFile);
+							
+							JSONParser jsonParser = new JSONParser();
+							
+							JSONObject jsonObject = (JSONObject) jsonParser.parse(new InputStreamReader( new FileInputStream(jsonFile)));
+							
+							System.out.println(jsonFile);
+							
+							
+							
+							
+							/*System.out.println("MetaData>>>"+(JSONArray)jsonObject.get("Metadata"));
+							
+							JSONObject metaObject = (JSONObject) jsonObject.get("Metadata");
+							
+							System.out.println("Data from Object  ::"+metaObject.get("last pulled"));
+							*/
+							/*json.put("URL", url);
+							json.put("File Name", fileName);
+							json.put("MetaData", jsonObject.get("MetaData"));
+							
+							metadataFile.write(json.toJSONString());
+							metadataFile.write("\r\n");*/
+		    				
+						}
+					}
+				}
+			}
+			//metadataFile.flush();
+			metadataFile.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 }

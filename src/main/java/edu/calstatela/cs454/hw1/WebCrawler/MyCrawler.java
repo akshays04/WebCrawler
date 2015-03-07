@@ -57,7 +57,8 @@ public class MyCrawler extends WebCrawler {
     	 try{
     			FileWriter file = new FileWriter(".\\CrawlerStorage\\map.json");
     			JSONObject json;
-    			
+    			Storage storage = new Storage();
+	
     			for(String name : urlMapper.keySet()){
     				json = new JSONObject();
     				json.put("url", name);
@@ -66,7 +67,11 @@ public class MyCrawler extends WebCrawler {
     				//write txt
     				file.write(json.toJSONString());
     				file.write("\r\n");
-    			}	
+    				//Call to metadata.json file write
+    				System.out.println("Calling MetaData>>>");
+    				storage.extractMetaData(urlMapper.get(name).toString(),name);
+    			}
+
     			file.flush();
     			file.close();
     			}catch(IOException e){e.printStackTrace();}
