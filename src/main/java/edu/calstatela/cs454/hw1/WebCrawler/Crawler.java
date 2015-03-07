@@ -16,7 +16,7 @@ public class Crawler {
         CrawlConfig crawlConfig = new CrawlConfig();
         crawlConfig.setMaxDepthOfCrawling(depth);
         //crawlConfig.setMaxDepthOfCrawling(2);
-        crawlConfig.setMaxPagesToFetch(100);
+        crawlConfig.setMaxPagesToFetch(5);
         crawlConfig.setCrawlStorageFolder("C:\\asp\\crawler4jStorage");
         crawlConfig.setIncludeBinaryContentInCrawling(true);
         System.out.println(crawlConfig.toString());
