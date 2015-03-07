@@ -3,9 +3,11 @@ package edu.calstatela.cs454.hw1.WebCrawler;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
+import java.net.URL;
 
 import org.json.simple.JSONObject;
 
@@ -22,15 +24,31 @@ public class MyCrawler extends WebCrawler {
             "|zip|rar|gz|7z|aac|ace|alz|apk|arc|arj|dmg|jar|lzip|lha)" +
             "(\\?.*)?$");
     
+    private static int depth;
+    private static Set<String> domains = new HashSet<String>();
+    
     private final static Storage storage = new Storage();
     private static HashMap<String, UUID> urlMapper = new HashMap<String, UUID>();
     
      @Override
      public boolean shouldVisit(Page referringPage, WebURL url) {
          String href = url.getURL().toLowerCase();
-         //return !FILTERS.matcher(href).matches();
-         return true;
-         //return !FILTERS.matcher(href).matches() && href.startsWith("http://www.ics.uci.edu/");
+         
+         try{
+             URL objurl = new URL(href);
+             if(domains.size()<depth)
+            	 domains.add(url.getDomain());
+             //System.out.println("URL : "+href+"  Domain : "+ url.getDomain()+"  Depth : "+url.getDepth());
+             }catch(Exception e){e.printStackTrace();}
+             
+             //return !FILTERS.matcher(href).matches();
+             if(domains.contains(url.getDomain())){
+            	 System.out.println("Accepted URL : "+href+"  Domain : "+ url.getDomain());
+            	 return true;}
+             else{
+            	 System.out.println("Rejected URL : "+href+"  Domain : "+ url.getDomain());
+            	 return false;}
+             //return !FILTERS.matcher(href).matches() && href.startsWith("http://www.ics.uci.edu/");
      }
 
      @Override
@@ -75,5 +93,9 @@ public class MyCrawler extends WebCrawler {
     			file.flush();
     			file.close();
     			}catch(IOException e){e.printStackTrace();}
+     }
+     
+     public static void setDepth(int d){
+    	 depth = d+1;
      }
 }
