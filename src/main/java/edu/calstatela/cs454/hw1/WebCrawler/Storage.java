@@ -1,5 +1,6 @@
 package edu.calstatela.cs454.hw1.WebCrawler;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -27,6 +28,7 @@ import org.apache.tika.sax.Link;
 import org.apache.tika.sax.LinkContentHandler;
 import org.apache.tika.sax.TeeContentHandler;
 import org.apache.tika.sax.ToHTMLContentHandler;
+import org.codehaus.jackson.JsonParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -145,7 +147,7 @@ public class Storage {
 				metadata.put("title", title);
 				metadata.put("type", type);
 				metadata.put("url", url);
-				metadata.put("last pulled", date);
+				metadata.put("last pulled", date.toString());
 				//metadata.put("links", links.toString());
 				data.setMetadata(metadata);
 				data.setLinks(linkMap);
@@ -246,7 +248,7 @@ public class Storage {
 	{
 		try
 		{
-			FileWriter metadataFile = new FileWriter(".\\CrawlerStorage\\metadata.json",true);
+			FileWriter metadataFile = new FileWriter("./CrawlerStorage/metadata.json",true);
 			JSONObject json = new JSONObject();
 					
 			File dirLoc = new File("./CrawlerStorage");
@@ -257,38 +259,22 @@ public class Storage {
 					for(File jsonFile : file.listFiles())
 					{
 						if(jsonFile.getName().equals(fileName+".json"))
-						{
-							System.out.println("file found"+fileName);
-							
-							FileReader fileReader = new FileReader(jsonFile);
-							
+						{		
 							JSONParser jsonParser = new JSONParser();
-							
-							JSONObject jsonObject = (JSONObject) jsonParser.parse(new InputStreamReader( new FileInputStream(jsonFile)));
-							
-							System.out.println(jsonFile);
-							
-							
-							
-							
-							/*System.out.println("MetaData>>>"+(JSONArray)jsonObject.get("Metadata"));
-							
-							JSONObject metaObject = (JSONObject) jsonObject.get("Metadata");
-							
-							System.out.println("Data from Object  ::"+metaObject.get("last pulled"));
-							*/
-							/*json.put("URL", url);
+							JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader(jsonFile));
+						
+							json.put("URL", url);
 							json.put("File Name", fileName);
-							json.put("MetaData", jsonObject.get("MetaData"));
+							json.put("MetaData", jsonObject.get("Metadata"));
 							
 							metadataFile.write(json.toJSONString());
-							metadataFile.write("\r\n");*/
+							metadataFile.write("\r\n");
 		    				
 						}
 					}
 				}
 			}
-			//metadataFile.flush();
+			
 			metadataFile.close();
 		}
 		catch (Exception e)

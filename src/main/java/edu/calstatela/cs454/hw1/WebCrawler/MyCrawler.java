@@ -68,7 +68,7 @@ public class MyCrawler extends WebCrawler {
     				file.write(json.toJSONString());
     				file.write("\r\n");
     				//Call to metadata.json file write
-    				System.out.println("Calling MetaData>>>");
+    				
     				storage.extractMetaData(urlMapper.get(name).toString(),name);
     			}
 

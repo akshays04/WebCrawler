@@ -16,7 +16,7 @@ public class Crawler {
         CrawlConfig crawlConfig = new CrawlConfig();
         //crawlConfig.setMaxDepthOfCrawling(depth);
         crawlConfig.setMaxDepthOfCrawling(2);
-        crawlConfig.setMaxPagesToFetch(1);
+        crawlConfig.setMaxPagesToFetch(10);
         crawlConfig.setCrawlStorageFolder("C:\\asp\\crawler4jStorage");
         crawlConfig.setIncludeBinaryContentInCrawling(true);
         System.out.println(crawlConfig.toString());
@@ -33,7 +33,7 @@ public class Crawler {
                 //controller.addSeed(url);
 
 
-                controller.start(MyCrawler.class, 100);
+                controller.start(MyCrawler.class, 1);
                 MyCrawler.writeMap();
                 
                 
