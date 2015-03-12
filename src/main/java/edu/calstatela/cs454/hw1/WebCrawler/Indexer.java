@@ -89,7 +89,7 @@ public class Indexer {
 
 	public void displayRank(Map<String, Double> pageRank) {
 		int count = 1;
-		System.out.println("# document number, page.html, ranking");
+		System.out.println("#document number, page.html, ranking");
 		for (String s : pageRank.keySet()) {
 			System.out.println(count + ". " + s + " "
 					+ new DecimalFormat("##.##").format(pageRank.get(s)*0.06));
