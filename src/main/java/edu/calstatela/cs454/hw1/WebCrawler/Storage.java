@@ -101,7 +101,7 @@ public class Storage {
 					System.out.println("Failed to create directory!");
 				}
 
-				JSONObject metadata = new JSONObject();
+				//JSONObject metadata = new JSONObject();
 
 				Tika tika = new Tika();
 				tika.setMaxStringLength(10 * 1024 * 1024);
@@ -122,29 +122,29 @@ public class Storage {
 				//System.out.println("ContentHandler"+textHandler.toString());
 
 				@SuppressWarnings("deprecation")
-				String title = met.get(Metadata.TITLE);
+				//String title = met.get(Metadata.TITLE);
 				String type = met.get(Metadata.CONTENT_TYPE);
 				System.out.println(type);
 
 				System.out.println(type);
 				//List<Link> links = linkHandler.getLinks();
 				// creating new obj
-				DataWeb data = new DataWeb();
-				HashMap<String, String> linkMap=new HashMap<String, String>();
-				for(Link objlink:linkHandler.getLinks())
+				//DataWeb data = new DataWeb();
+				//HashMap<String, String> linkMap=new HashMap<String, String>();
+				/*for(Link objlink:linkHandler.getLinks())
 				{
 					linkMap.put(objlink.getUri().toString(), objlink.getText());
 			
 				}
-
+*/
 				// adding url
-				data.setUrl(url);
+				//data.setUrl(url);
 
-				Date date = new Date();
+				//Date date = new Date();
 
 				//data.setUrllinks(links);
 
-				metadata.put("title", title);
+				/*metadata.put("title", title);
 				metadata.put("type", type);
 				metadata.put("url", url);
 				metadata.put("last pulled", date.toString());
@@ -155,7 +155,7 @@ public class Storage {
 				// data.setElements(doc.select("meta"));
 				data.createJSON();
 				
-				if (url.toLowerCase().contains(".pdf")) {
+*/				if (url.toLowerCase().contains(".pdf")) {
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
@@ -229,14 +229,14 @@ public class Storage {
 				}
 
 				System.out.println(uuid);
-				FileWriter file = new FileWriter(".\\CrawlerStorage\\"
+				/*FileWriter file = new FileWriter(".\\CrawlerStorage\\"
 						+ uuid.toString() + "\\" + uuid + ".json");
 				file.write(data.getJson().toJSONString());
 				file.write("\r\n");
 
 				// file.flush();
 				file.close();
-			}
+*/			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
