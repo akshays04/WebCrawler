@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 import java.net.URL;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import edu.uci.ics.crawler4j.crawler.Page;
@@ -76,19 +77,23 @@ public class MyCrawler extends WebCrawler {
     			FileWriter file = new FileWriter(".\\CrawlerStorage\\map.json");
     			JSONObject json;
     			Storage storage = new Storage();
+    			JSONArray jsonArr = new JSONArray();
 	
     			for(String name : urlMapper.keySet()){
     				json = new JSONObject();
     				json.put("url", name);
-    				json.put("filename", urlMapper.get(name)+".json");
+    				json.put("filename", urlMapper.get(name)+"");
+    				jsonArr.add(json);
     				
     				//write txt
-    				file.write(json.toJSONString());
-    				file.write("\r\n");
+    				//file.write(json.toJSONString());
+    				//file.write("\r\n");
     				//Call to metadata.json file write
     				
-    				storage.extractMetaData(urlMapper.get(name).toString(),name);
+    				//storage.extractMetaData(urlMapper.get(name).toString(),name);
     			}
+    			file.write(jsonArr.toJSONString());
+				file.write("\r\n");
 
     			file.flush();
     			file.close();
