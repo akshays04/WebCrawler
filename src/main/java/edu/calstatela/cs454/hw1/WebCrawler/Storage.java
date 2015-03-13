@@ -89,6 +89,7 @@ public class Storage {
 	public static UUID saveTika(String url) {
 		UUID uuid = null;
 		try {
+			boolean htmlFlag = true;
 			File dir2 = new File(".\\CrawlerStorage");
 			if(dir2.mkdir()){}
 			if (!url.toLowerCase().contains("https")) {
@@ -156,6 +157,7 @@ public class Storage {
 				data.createJSON();
 				
 */				if (url.toLowerCase().contains(".pdf")) {
+					htmlFlag = false; 
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
@@ -165,6 +167,7 @@ public class Storage {
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
 				if(type.equals("application/vnd.ms-powerpoint")){
+					htmlFlag = false;
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
@@ -174,6 +177,7 @@ public class Storage {
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
 				if(type.equals("image/png")){
+					htmlFlag = false;
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
@@ -183,6 +187,7 @@ public class Storage {
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
 				if(type.equals("image/jpeg")){
+					htmlFlag = false;
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
@@ -192,6 +197,7 @@ public class Storage {
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
 				if(type.equals("image/gif")){
+					htmlFlag = false;
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
@@ -201,6 +207,7 @@ public class Storage {
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
 				if(type.equals("application/xml")){
+					htmlFlag = false;
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
@@ -210,6 +217,7 @@ public class Storage {
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
 				if(type.equals("image/vnd.microsoft.icon")){
+					htmlFlag = false;
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
@@ -218,7 +226,7 @@ public class Storage {
 									+ uuid.toString() + ".icon");
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
-				if (true) {
+				if (htmlFlag) {
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
