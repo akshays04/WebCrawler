@@ -16,7 +16,7 @@
 
 
 	<build>
-		<finalName>Presentation</finalName>
+		<finalName>Crawler</finalName>
 		<plugins>
 
 			<!-- download source code in Eclipse, best practice -->
