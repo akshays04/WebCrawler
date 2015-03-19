@@ -11,6 +11,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.jsoup.select.Elements;
 
+@SuppressWarnings("unused")
 public class DataWeb {
 	
 	String url;
@@ -31,7 +32,7 @@ public class DataWeb {
 	}
 
 	public DataWeb(String path, List<String> links, List<DataFile> files,
-			Elements elements, JSONObject json) {
+			Elements elements, JSONObject json, String url) {
 		super();
 		this.url = url;
 		this.path = path;
@@ -90,6 +91,7 @@ public class DataWeb {
 		this.url = url;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void createJSON(){
 		this.json.put("url", this.url);
 		//this.json.put("data", this.data);

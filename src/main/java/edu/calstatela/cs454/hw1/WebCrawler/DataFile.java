@@ -87,6 +87,7 @@ public class DataFile {
 		this.json = json;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void createJSON(){
 		this.json.put("url", this.url);
 		this.json.put("date", this.date);

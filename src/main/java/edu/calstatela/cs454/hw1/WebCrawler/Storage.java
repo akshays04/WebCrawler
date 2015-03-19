@@ -39,6 +39,7 @@ import org.jsoup.select.Elements;
 import org.xml.sax.ContentHandler;
 
 import com.sleepycat.je.sync.impl.SyncCleanerBarrier.SyncTrigger;
+@SuppressWarnings("unused")
 public class Storage {
 
 	private final static Pattern FILTERS = Pattern
@@ -82,7 +83,6 @@ public class Storage {
 				parser.parse(objurl.openStream(), teeHandler, met, parseContext);
 				//System.out.println("ContentHandler"+textHandler.toString());
 
-				@SuppressWarnings("deprecation")
 				//String title = met.get(Metadata.TITLE);
 				String type = met.get(Metadata.CONTENT_TYPE);
 				System.out.println(type);
@@ -121,6 +121,7 @@ public class Storage {
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
+					@SuppressWarnings("resource")
 					FileOutputStream fos = new FileOutputStream(
 							".\\CrawlerStorage\\" + uuid.toString() + "\\"
 									+ uuid.toString() + ".pdf");
@@ -131,6 +132,7 @@ public class Storage {
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
+					@SuppressWarnings("resource")
 					FileOutputStream fos = new FileOutputStream(
 							".\\CrawlerStorage\\" + uuid.toString() + "\\"
 									+ uuid.toString() + ".ppt");
@@ -141,6 +143,7 @@ public class Storage {
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
+					@SuppressWarnings("resource")
 					FileOutputStream fos = new FileOutputStream(
 							".\\CrawlerStorage\\" + uuid.toString() + "\\"
 									+ uuid.toString() + ".png");
@@ -151,6 +154,7 @@ public class Storage {
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
+					@SuppressWarnings("resource")
 					FileOutputStream fos = new FileOutputStream(
 							".\\CrawlerStorage\\" + uuid.toString() + "\\"
 									+ uuid.toString() + ".jpg");
@@ -161,6 +165,7 @@ public class Storage {
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
+					@SuppressWarnings("resource")
 					FileOutputStream fos = new FileOutputStream(
 							".\\CrawlerStorage\\" + uuid.toString() + "\\"
 									+ uuid.toString() + ".gif");
@@ -171,6 +176,7 @@ public class Storage {
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
+					@SuppressWarnings("resource")
 					FileOutputStream fos = new FileOutputStream(
 							".\\CrawlerStorage\\" + uuid.toString() + "\\"
 									+ uuid.toString() + ".xml");
@@ -181,6 +187,7 @@ public class Storage {
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
+					@SuppressWarnings("resource")
 					FileOutputStream fos = new FileOutputStream(
 							".\\CrawlerStorage\\" + uuid.toString() + "\\"
 									+ uuid.toString() + ".icon");
@@ -190,6 +197,7 @@ public class Storage {
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
+					@SuppressWarnings("resource")
 					FileOutputStream fos = new FileOutputStream(
 							".\\CrawlerStorage\\" + uuid.toString() + "\\"
 									+ uuid.toString() + ".html");
@@ -212,6 +220,7 @@ public class Storage {
 		return uuid;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void extractMetaData(String fileName,String url)
 	{
 		try

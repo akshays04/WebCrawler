@@ -20,7 +20,8 @@ import edu.uci.ics.crawler4j.url.WebURL;
 
 public class MyCrawler extends WebCrawler {
 
-    private final static Pattern FILTERS = Pattern.compile(".*\\.(bmp|gif|png|tiff?|ico|xaml|pict|rif|pptx?|ps" +
+    @SuppressWarnings("unused")
+	private final static Pattern FILTERS = Pattern.compile(".*\\.(bmp|gif|png|tiff?|ico|xaml|pict|rif|pptx?|ps" +
             "|mid|mp2|mp4|wav|wma|au|aiff|flac|ogg|3gp|aac|amr|au|vox" +
             "|avi|mov|mpe?g|ra?m|m4v|smil|wm?v|swf|aaf|asf|flv|mkv" +
             "|zip|rar|gz|7z|aac|ace|alz|apk|arc|arj|dmg|jar|lzip|lha)" +
@@ -37,7 +38,8 @@ public class MyCrawler extends WebCrawler {
          String href = url.getURL().toLowerCase();
          
          try{
-             URL objurl = new URL(href);
+             @SuppressWarnings("unused")
+			URL objurl = new URL(href);
              if(domains.size()<depth)
             	 domains.add(url.getDomain());
              //System.out.println("URL : "+href+"  Domain : "+ url.getDomain()+"  Depth : "+url.getDepth());
@@ -57,7 +59,8 @@ public class MyCrawler extends WebCrawler {
      public void visit(Page page) {
          String url = page.getWebURL().getURL();
          System.out.println("URL: " + url);
-         UUID filename = storage.saveTika(url);
+         @SuppressWarnings("static-access")
+		UUID filename = storage.saveTika(url);
          if(filename != null)
         	 urlMapper.put(url, filename);
 
@@ -73,11 +76,13 @@ public class MyCrawler extends WebCrawler {
          }
     }
      
-     public static void writeMap(){
+     @SuppressWarnings("unchecked")
+	public static void writeMap(){
     	 try{
     			FileWriter file = new FileWriter(".\\CrawlerStorage\\map.json");
     			JSONObject json;
-    			Storage storage = new Storage();
+    			@SuppressWarnings("unused")
+				Storage storage = new Storage();
     			JSONArray jsonArr = new JSONArray();
     			String newUrl;
 	
