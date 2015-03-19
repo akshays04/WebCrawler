@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 import java.net.URL;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -78,10 +79,13 @@ public class MyCrawler extends WebCrawler {
     			JSONObject json;
     			Storage storage = new Storage();
     			JSONArray jsonArr = new JSONArray();
+    			String newUrl;
 	
     			for(String name : urlMapper.keySet()){
     				json = new JSONObject();
-    				json.put("url", name);
+    				newUrl = StringEscapeUtils.unescapeEcmaScript(name);
+    				//System.out.println(name+" vs "+newUrl);
+    				json.put("url", newUrl);
     				json.put("filename", urlMapper.get(name)+"");
     				jsonArr.add(json);
     				
