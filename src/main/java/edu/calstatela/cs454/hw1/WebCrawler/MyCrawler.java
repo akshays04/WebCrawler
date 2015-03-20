@@ -59,6 +59,7 @@ public class MyCrawler extends WebCrawler {
 
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void visit(Page page) {
 		String url = page.getWebURL().getURL();
