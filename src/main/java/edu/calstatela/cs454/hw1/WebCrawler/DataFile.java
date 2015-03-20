@@ -4,16 +4,21 @@ import org.json.simple.JSONObject;
 import org.jsoup.nodes.Element;
 
 public class DataFile {
-	
+
 	String url;
+
 	String date;
+
 	String filename;
+
 	String localFilename;
+
 	String type;
+
 	Element elements;
-	
+
 	JSONObject json;
-	
+
 	public DataFile() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -88,7 +93,7 @@ public class DataFile {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void createJSON(){
+	public void createJSON() {
 		this.json.put("url", this.url);
 		this.json.put("date", this.date);
 		this.json.put("filename", this.filename);

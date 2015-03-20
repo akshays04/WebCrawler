@@ -39,6 +39,7 @@ import org.jsoup.select.Elements;
 import org.xml.sax.ContentHandler;
 
 import com.sleepycat.je.sync.impl.SyncCleanerBarrier.SyncTrigger;
+
 @SuppressWarnings("unused")
 public class Storage {
 
@@ -46,24 +47,22 @@ public class Storage {
 			.compile(".*\\.(jpg|xls|xlsx|doc|docx|ppt|pptx|pdf|mp3|jpeg)"
 					+ "(\\?.*)?$");
 
-	
 	public static UUID saveTika(String url) {
 		UUID uuid = null;
 		try {
 			boolean htmlFlag = true;
 			File dir2 = new File(".\\CrawlerStorage");
-			if(dir2.mkdir()){}
+			if (dir2.mkdir()) {
+			}
 			if (!url.toLowerCase().contains("https")) {
 				uuid = UUID.randomUUID();
 				File directory = new File(".\\CrawlerStorage\\"
 						+ uuid.toString());
 				if (directory.mkdir()) {
-					System.out.println("Directory is created!");
+					//System.out.println("Directory is created!");
 				} else {
-					System.out.println("Failed to create directory!");
+					//System.out.println("Failed to create directory!");
 				}
-
-				//JSONObject metadata = new JSONObject();
 
 				Tika tika = new Tika();
 				tika.setMaxStringLength(10 * 1024 * 1024);
@@ -73,51 +72,17 @@ public class Storage {
 				ToHTMLContentHandler toHTMLHandler = new ToHTMLContentHandler();
 				ParseContext parseContext = new ParseContext();
 				LinkContentHandler linkHandler = new LinkContentHandler();
-				ContentHandler textHandler = new BodyContentHandler(10 * 1024 * 1024);
+				ContentHandler textHandler = new BodyContentHandler(
+						10 * 1024 * 1024);
 				TeeContentHandler teeHandler = new TeeContentHandler(
 						linkHandler, textHandler, toHTMLHandler);
-				 //ContentHandler contenthandler = new BodyContentHandler();
-				
 
 				AutoDetectParser parser = new AutoDetectParser();
 				parser.parse(objurl.openStream(), teeHandler, met, parseContext);
-				//System.out.println("ContentHandler"+textHandler.toString());
-
-				//String title = met.get(Metadata.TITLE);
 				String type = met.get(Metadata.CONTENT_TYPE);
-				System.out.println(type);
-
-				System.out.println(type);
-				//List<Link> links = linkHandler.getLinks();
-				// creating new obj
-				//DataWeb data = new DataWeb();
-				//HashMap<String, String> linkMap=new HashMap<String, String>();
-				/*for(Link objlink:linkHandler.getLinks())
-				{
-					linkMap.put(objlink.getUri().toString(), objlink.getText());
-			
-				}
-*/
-				// adding url
-				//data.setUrl(url);
-
-				//Date date = new Date();
-
-				//data.setUrllinks(links);
-
-				/*metadata.put("title", title);
-				metadata.put("type", type);
-				metadata.put("url", url);
-				metadata.put("last pulled", date.toString());
-				//metadata.put("links", links.toString());
-				data.setMetadata(metadata);
-				data.setLinks(linkMap);
-
-				// data.setElements(doc.select("meta"));
-				data.createJSON();
-				
-*/				if (url.toLowerCase().contains(".pdf")) {
-					htmlFlag = false; 
+	
+				if (url.toLowerCase().contains(".pdf")) {
+					htmlFlag = false;
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
 							.openStream());
@@ -127,7 +92,10 @@ public class Storage {
 									+ uuid.toString() + ".pdf");
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
-				if(type.equals("application/vnd.ms-powerpoint")){
+				if (url.toLowerCase().contains(".css")) {
+					htmlFlag = false;
+				}
+				if (type.equals("application/vnd.ms-powerpoint")) {
 					htmlFlag = false;
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
@@ -138,7 +106,7 @@ public class Storage {
 									+ uuid.toString() + ".ppt");
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
-				if(type.equals("image/png")){
+				if (type.equals("image/png")) {
 					htmlFlag = false;
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
@@ -149,7 +117,7 @@ public class Storage {
 									+ uuid.toString() + ".png");
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
-				if(type.equals("image/jpeg")){
+				if (type.equals("image/jpeg")) {
 					htmlFlag = false;
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
@@ -160,7 +128,7 @@ public class Storage {
 									+ uuid.toString() + ".jpg");
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
-				if(type.equals("image/gif")){
+				if (type.equals("image/gif")) {
 					htmlFlag = false;
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
@@ -171,7 +139,7 @@ public class Storage {
 									+ uuid.toString() + ".gif");
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
-				if(type.equals("application/xml")){
+				if (type.equals("application/xml")) {
 					htmlFlag = false;
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
@@ -182,7 +150,7 @@ public class Storage {
 									+ uuid.toString() + ".xml");
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
-				if(type.equals("image/vnd.microsoft.icon")){
+				if (type.equals("image/vnd.microsoft.icon")) {
 					htmlFlag = false;
 					URL website = new URL(url);
 					ReadableByteChannel rbc = Channels.newChannel(website
@@ -204,59 +172,44 @@ public class Storage {
 					fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 				}
 
-				System.out.println(uuid);
-				/*FileWriter file = new FileWriter(".\\CrawlerStorage\\"
-						+ uuid.toString() + "\\" + uuid + ".json");
-				file.write(data.getJson().toJSONString());
-				file.write("\r\n");
-
-				// file.flush();
-				file.close();
-*/			}
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return uuid;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public void extractMetaData(String fileName,String url)
-	{
-		try
-		{
-			FileWriter metadataFile = new FileWriter("./CrawlerStorage/metadata.json",true);
+	public void extractMetaData(String fileName, String url) {
+		try {
+			FileWriter metadataFile = new FileWriter(
+					"./CrawlerStorage/metadata.json", true);
 			JSONObject json = new JSONObject();
-			
-					
+
 			File dirLoc = new File("./CrawlerStorage");
-			for(File file : dirLoc.listFiles())
-			{
-				if(file.isDirectory() && file.getName().equals(fileName))
-				{
-					for(File jsonFile : file.listFiles())
-					{
-						if(jsonFile.getName().equals(fileName+".json"))
-						{		
+			for (File file : dirLoc.listFiles()) {
+				if (file.isDirectory() && file.getName().equals(fileName)) {
+					for (File jsonFile : file.listFiles()) {
+						if (jsonFile.getName().equals(fileName + ".json")) {
 							JSONParser jsonParser = new JSONParser();
-							JSONObject jsonObject = (JSONObject) jsonParser.parse(new FileReader(jsonFile));
-						
+							JSONObject jsonObject = (JSONObject) jsonParser
+									.parse(new FileReader(jsonFile));
+
 							json.put("URL", url);
 							json.put("File Name", fileName);
 							json.put("MetaData", jsonObject.get("Metadata"));
-							
+
 							metadataFile.write(json.toJSONString());
 							metadataFile.write("\r\n");
-		    				
+
 						}
 					}
 				}
 			}
-			
+
 			metadataFile.close();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
